@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta name="robots" content="noindex , nofollow" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>carousel slider</title>
+    <meta name="description" content="carousel slider training" />
+
+    <!--
+        <meta property="og:url" content="http://">
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="title">
+        <meta property="og:description" content="text">
+        <meta property="og:image" content="http://">
+        -->
+
+    <!-- CSS-->
+    <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Noto+Sans+JP:wght@400;700&display=swap"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <style>
+    a:hover {
+      opacity: 50%;
+    }
+
+    img {
+      width: 100%;
+      vertical-align: bottom;
+    }
+
+    li {
+      list-style: none;
+    }
+
+    .slider_ly {
+      display: flex;
+      align-items: center;
+    }
+
+    .slider-btn {
+      margin: 0 10px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #000000;
+      position: relative;
+    }
+    .slider-btn::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 9px;
+      height: 9px;
+      border-top: 3px solid #ffffff;
+      border-left: 3px solid #ffffff;
+    }
+    .slider-btn:hover {
+      transform: scale(1.4);
+      transition: all 0.3s ease-out;
+    }
+
+    .slider-btn.js__left-btn::after {
+      transform: translate(-38%, -50%) rotate(-45deg);
+    }
+
+    .slider-btn.js__right-btn::after {
+      transform: translate(-72%, -50%) rotate(135deg);
+    }
+
+    .slider-overfrow {
+      width: 1000px;
+      overflow: hidden;
+    }
+
+    .js__slider-box {
+      width: 1000px;
+      display: flex;
+      transform: translateX(-100%);
+      transition: transform 0.5s ease;
+    }
+
+    .js__slider img {
+      width: 1000px;
+    }
+    /*# sourceMappingURL=style.css.map */
+  </style>
+
+  <body>
+    <main>
+      <div class="slider_ly">
+        <div class="slider-btn js__left-btn"></div>
+        <div class="slider-overfrow">
+          <ul class="js__slider-box">
+            <li class="js__slider">
+              <a href="#"><img src="img/mainvisual7.jpg" alt="img1" /></a>
+            </li>
+            <li class="js__slider">
+              <a href="#"><img src="img/mainvisual1.jpg" alt="img1" /></a>
+            </li>
+            <li class="js__slider">
+              <a href="#"><img src="img/mainvisual2.jpg" alt="img1" /></a>
+            </li>
+            <li class="js__slider">
+              <a href="#"><img src="img/mainvisual3.jpg" alt="img1" /></a>
+            </li>
+            <li class="js__slider">
+              <a href="#"><img src="img/mainvisual4.jpg" alt="img1" /></a>
+            </li>
+            <li class="js__slider">
+              <a href="#"><img src="img/mainvisual5.jpg" alt="img1" /></a>
+            </li>
+            <li class="js__slider">
+              <a href="#"><img src="img/mainvisual6.jpg" alt="img1" /></a>
+            </li>
+            <li class="js__slider">
+              <a href="#"><img src="img/mainvisual7.jpg" alt="img1" /></a>
+            </li>
+            <li class="js__slider">
+              <a href="#"><img src="img/mainvisual1.jpg" alt="img1" /></a>
+            </li>
+          </ul>
+        </div>
+        <div class="slider-btn js__right-btn"></div>
+      </div>
+
+      <script>
+        const slider = document.querySelector(".js__slider-box");
+        const slides = document.querySelectorAll(".js__slider");
+        let currentIndex = 1;
+
+        function showSlide(index) {
+          const newPosition = -index * 100 + "%";
+          slider.style.transform = "translateX(" + newPosition + ")";
+        }
+
+        function prevSlide() {
+          currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+          showSlide(currentIndex);
+        }
+
+        function nextSlide() {
+          currentIndex = (currentIndex + 1) % slides.length;
+          showSlide(currentIndex);
+        }
+
+        function loop() {
+          slider.style.transition = "none";
+          showSlide(currentIndex);
+          void slider.offsetWidth;
+          slider.style.transition = "transform 0.5s ease-in-out";
+        }
+
+        function prevLoop() {
+          if (currentIndex === 0) {
+            currentIndex = slides.length - 2;
+            loop();
+            prevSlide();
+          } else {
+            prevSlide();
+          }
+        }
+
+        function nextLoop() {
+          if (currentIndex === slides.length - 1) {
+            currentIndex = 1;
+            loop();
+            nextSlide();
+          } else {
+            nextSlide();
+          }
+        }
+
+        // setInterval(nextSlide, 3000);
+
+        document
+          .querySelector(".js__left-btn")
+          .addEventListener("click", prevLoop);
+        document
+          .querySelector(".js__right-btn")
+          .addEventListener("click", nextLoop);
+      </script>
+    </main>
+    <!-- main end  -->
+  </body>
+</html>
